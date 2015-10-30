@@ -1,0 +1,88 @@
+<?php
+////////////////////////////////////////////////////////////////////////
+// main
+function cipher_menu() {
+  $items = array();
+  $items['cipher'] = array(
+    'title' => 'Cipher Shifter',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('cipher_form'),
+    'access callback' => TRUE,
+    'type' => MENU_NORMAL_ITEM,
+  );
+  // link to success page
+    $items['cipher_success_page'] = array(
+      'title' => 'Success',
+      'page callback' => 'cipher_success',
+      'access callback' => TRUE,
+      'type' => MENU_CALLBACK,
+  );
+  return $items;
+///////////////////////////////////////////////////////////////////////
+}
+// form
+// all feilds need to have "required" added for validation
+function cipher_form() {
+  $form = array();
+  // textfeild for the input string
+
+  // textfeild to insert the number to shift by
+  $form['input_cipher'] = array(
+    '#title' => 'Input',
+    '#type' => 'textfield',
+    '#description' => t('Input number you want the cipher to shift by.'),
+  );
+  // textfeild to indicate the direction to be shifted
+  // left or right dropdown for easier validation?
+
+
+// submit put to go to the output page and display final cipher
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => 'Go',
+  );
+
+  return $form;
+}
+////////////////////////////////////////////////////////////////////////
+// submit form
+function cipher_form_submit($form, &$form_state){
+
+  $_______ = $form_state['values'] ['input_cipher'];
+  $cipher_output = array();
+
+  $string = "hello";
+  $newstring = "hello";
+// input = 0, input less than stringlength of inputted string, find the count of it.
+  for ($i=0;$i<strlen($string);$i++) {
+
+  	$ascii = ord($string[$i]);
+  	if($ascii == 90) { //makes it uppercase?
+  		$ascii = 65; //reset back to 'A'?
+  		}
+  	else if($ascii == 122) { //makes it lowercase?
+  		$ascii = 97; //reset back to 'a'?
+  		}
+  	else {
+  		$ascii++;// find the count
+  	}
+    // still need something to add indicate if it needs to be shifted left or right 
+  	$newstring[$i] = chr($ascii);
+  	echo $newstring."where the out put is right now?";
+  }
+///////////////////////////////////////////////////////////////////////
+  $_SESSION['cipher_output'] = $cipher_output;
+  $form_state['redirect'] = "cipher_success_page";
+}
+// link to cipher success page like in angular
+function cipher_success() {
+  $output = '<ul>';
+  foreach ($_SESSION['cipher_output'] as $value) {
+    $output = $output . '<li>' . $value . '</li>';
+  }
+
+  $output = $output . '</ul>';
+  // output from actual from, not the function
+  return "Hoorayyy! $output";
+}
+////////////////////////////////////////////////////////////////////////

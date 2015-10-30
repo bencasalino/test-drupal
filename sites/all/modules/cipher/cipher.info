@@ -1,0 +1,5 @@
+name = Cipher
+description = Shift Cipher Code Review
+package = Drupal CR2
+core = 7.x
+files [] = cipher.module
