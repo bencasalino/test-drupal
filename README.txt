@@ -1,3 +1,18 @@
+Sorry I was nervous to change the DB name to yourname_cipher without messing it up.
+DB user/pass
+user: test-admin
+pass: password
+
+Drupal login
+user: admin
+pass: password 
+
+
+
+
+
+
+
 
 CONTENTS OF THIS FILE
 ---------------------
